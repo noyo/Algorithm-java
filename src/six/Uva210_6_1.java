@@ -11,6 +11,12 @@ import java.util.Queue;
 import util.IOUtils;
 import util.StringUtils;
 
+/**
+ * 例题
+ * 
+ * @author chris
+ *
+ */
 public class Uva210_6_1 {
 	private final String PRINT = "print";
 	private final String LOCK = "lock";
