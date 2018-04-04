@@ -8,9 +8,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @Description: 输入输出流工具类
+ * 
+ * @Package: util 
+ * @author: Chris   
+ * @date: 2018年4月4日 下午2:53:49
+ */
 public class IOUtils {
 	
-	private static final String ROOT = "C:\\Users\\Administrator\\Desktop\\算法io";
+	private static final String ROOT = System.getProperty("user.dir") + "/io";
 
 	/**
 	 * 按行读文件

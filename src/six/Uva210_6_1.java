@@ -13,8 +13,9 @@ import util.StringUtils;
 
 /**
  * 例题
+ * 差异：当前程序不会重复执行lock语句 (时序问题)
  * 
- * @author chris
+ * @author Chris
  *
  */
 public class Uva210_6_1 {
@@ -23,7 +24,7 @@ public class Uva210_6_1 {
 	private final String UNLOCK = "unlock";
 	private final String END = "end";
 	private final String EQUAL = "=";
-	private final String FILE = "6-1 uva210";
+	private final String FILE = "6/1";
 
 	private int num;
 	private int t[] = new int[5];
@@ -69,8 +70,8 @@ public class Uva210_6_1 {
 	private void print(String s[]) {
 //		 System.out.println(curProgram + 1 + ": " + s[1] + "="
 //				 + (null == var.get(s[1]) ? 0 : var.get(s[1])));
-//		 IOUtils.wirteToFile(FILE + "/out.txt", true
-//				 , curProgram + 1 + ": " + (null == var.get(s[1]) ? 0 : var.get(s[1])) + "\n");
+		 IOUtils.wirteToFile(FILE + "/out.txt", true
+				 , curProgram + 1 + ": " + (null == var.get(s[1]) ? 0 : var.get(s[1])) + "\n");
 	}
 
 	/**
