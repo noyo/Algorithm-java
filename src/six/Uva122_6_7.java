@@ -19,7 +19,7 @@ public class Uva122_6_7 {
     private List<String> data = IOUtils.readFromFile("6/7/in.txt");
     private Node root;
 
-    private void layerDisplay(Node bTree) {
+    private void bfs(Node bTree) {
         if (null == bTree) return;
         LinkedList<Node> queue = new LinkedList<>();
         queue.push(bTree);
@@ -59,28 +59,10 @@ public class Uva122_6_7 {
             String ss[] = s.split(",");
             uva.insertNode(Integer.parseInt(ss[0].substring(1)), ss[1].substring(0, ss[1].length() - 1));
         }
-        uva.layerDisplay(uva.root);
+        uva.bfs(uva.root);
 
     }
 
-    class Node {
-        int val;
-        boolean valued = false;
-        Node left;
-        Node right;
 
-        Node getLeft() {
-            if (null == left) {
-                left = new Node();
-            }
-            return left;
-        }
 
-        Node getRight() {
-            if (null == right) {
-                right = new Node();
-            }
-            return right;
-        }
-    }
 }
