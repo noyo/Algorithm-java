@@ -12,7 +12,7 @@ import java.util.List;
  * 
  * @Description: 输入输出流工具类
  * 
- * @Package: util 
+ * @Package: util
  * @author: Chris   
  * @date: 2018年4月4日 下午2:53:49
  */
@@ -22,8 +22,8 @@ public class IOUtils {
 
 	/**
 	 * 按行读文件
-	 * @param filePath
-	 * @return
+	 * @param filePath 文件路径
+	 * @return List<String>
 	 */
 	public static List<String> readFromFile(String filePath) {
 		List<String> data = new ArrayList<>();
@@ -40,8 +40,8 @@ public class IOUtils {
 	
 	/**
 	 * 按行写文件
-	 * @param data
-	 * @param filePath
+	 * @param data 待写入数据
+	 * @param filePath 文件路径
 	 */
 	public static void wirteToFile(String filePath, boolean add, String... data) {
 		File file = new File(ROOT + "/" + filePath);
