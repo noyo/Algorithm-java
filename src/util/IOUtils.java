@@ -10,11 +10,11 @@ import java.util.List;
 
 /**
  * 
- * @Description: 输入输出流工具类
+ *  输入输出流工具类
  * 
- * @Package: util
- * @author: Chris   
- * @date: 2018年4月4日 下午2:53:49
+ * @see  util
+ * @author Chris
+ * 2018年4月4日 下午2:53:49
  */
 public class IOUtils {
 	
