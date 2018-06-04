@@ -3,6 +3,7 @@ package eight;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -28,26 +29,36 @@ public class Uva12174 {
             int n = sc.nextInt();
             int last[] = new int[s + 1];
             int pre[] = new int[n + 1];
-            int start = -s + 1;
-            int min = s;
-            for (int i = 1; i <= n; i++) {
+            int ok[] = new int[s];
+            int start = -s;
+            boolean flag = true;
+
+            Arrays.fill(pre, - 1);
+            for (int i = 0; i < n; i++) {
                 int num = sc.nextInt();
                 int len = i - start + 1;
                 pre[i] = last[num];
 
-                if (pre[i] == 0 || pre[i] < start) {
+                if (pre[i] == -1 || pre[i] < start) {
                     if (len == s) {
                         start++;
                     }
                 } else {
-                    if (start > 0 && (pre[pre[i]] > 0 && i - pre[pre[i]] <= s)) {
-                        min = 0;
+                    if (pre[pre[i]] >= 0 && i - pre[pre[i]] <= s) {
+                        flag = false;
                         break;
                     }
-                    min = Math.min(min, pre[i] + 1 - start);
                     start = pre[i] + 1;
                 }
                 last[num] = i;
+            }
+            if (!flag) {
+                System.out.println(0);
+                continue;
+            }
+            int min = s;
+            for (int i = 0; i < s; i++) {
+
             }
             System.out.println(min);
         }
