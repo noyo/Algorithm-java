@@ -1,5 +1,8 @@
 package meituan;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.*;
 
 /**
@@ -65,8 +68,10 @@ public class f6 {
         }
         int k = 1;
         start--;
+        TreeSet<Edge> treeSet = new TreeSet<>((o1, o2) -> o1.x != o2.x ? o1.x - o2.x : o1.y - o2.y);
         for (int i = start + 1; i < m; i++) {
             Edge edge = edges.get(i);
+            treeSet.add(edge);
             if ((left[edge.x] == 0 && right[edge.y] == 0)
                     || (i - start - left[edge.x] - right[edge.y] == k)) {
                 result[k] = edge.w;
@@ -90,7 +95,11 @@ public class f6 {
     }
 
     @SuppressWarnings("unchecked")
-    public static void main(String args[]) {
+    public static void main(String args[]) throws FileNotFoundException {
+
+        System.setIn(new FileInputStream("src/meituan/in.txt"));
+        System.setOut(new PrintStream("src/meituan/out.txt"));
+
         init();
         execu();
         output();
