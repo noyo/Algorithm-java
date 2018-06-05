@@ -1,3 +1,5 @@
+package eight;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -8,11 +10,11 @@ import java.util.Scanner;
  * <p>
  * Description:
  * <p>
- * Package: PACKAGE_NAME
+ * Package: eight
  * author: Chris
- * date: 2018/6/5 9:22
+ * date: 2018/6/5 9:53
  */
-public class Main {
+public class Uva1607 {
 
     public static void main(String args[]) throws FileNotFoundException {
 

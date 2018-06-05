@@ -27,26 +27,33 @@ public class Uva12174 {
             sc.nextLine();
             int s = sc.nextInt();
             int n = sc.nextInt();
+            if (s <= 1) {
+                sc.nextLine();
+                System.out.println(s);
+                continue;
+            }
             int last[] = new int[s + 1];
             int pre[] = new int[n + 1];
-            int ok[] = new int[s];
+            int notOk[] = new int[s + 1];
             int start = -s;
             boolean flag = true;
 
             Arrays.fill(pre, - 1);
+            Arrays.fill(last, - 1);
             for (int i = 0; i < n; i++) {
                 int num = sc.nextInt();
-                int len = i - start + 1;
+                int len = i - start;
                 pre[i] = last[num];
 
-                if (pre[i] == -1 || pre[i] < start) {
-                    if (len == s) {
-                        start++;
-                    }
+                if (pre[i] == -1 || len == s && pre[i] < start) {
+                    start++;
                 } else {
                     if (pre[pre[i]] >= 0 && i - pre[pre[i]] <= s) {
                         flag = false;
                         break;
+                    }
+                    for (int j = i - s + 1; j <= pre[i]; j++) {
+                        notOk[((j + s) % s) + 1] = 1;
                     }
                     start = pre[i] + 1;
                 }
@@ -57,8 +64,8 @@ public class Uva12174 {
                 continue;
             }
             int min = s;
-            for (int i = 0; i < s; i++) {
-
+            for (int i = 1; i <= s; i++) {
+                min -= notOk[i];
             }
             System.out.println(min);
         }
