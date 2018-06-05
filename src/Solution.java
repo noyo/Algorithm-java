@@ -1,42 +1,54 @@
-/**
- * Copyright © 2018 Chris. All rights reserved.
- * <p>
- * Description:
- * <p>
- * Package: PACKAGE_NAME
- * author: Chris
- * date: 2018/5/14 10:33
- */
 class Solution {
 
-    class RangeModule {
+    int min = Integer.MAX_VALUE;
 
-        /*List<Integer>
-
-        public RangeModule() {
-            range = new LinkedList<>();
+    void dfs(int graph[][], boolean vst[][], int start, int len, boolean visit[], int n) {
+        if (n == graph.length) {
+            min = Math.min(min, len);
+            return;
         }
-
-        public void addRange(int left, int right) {
-            int p = range;
-            while (null != p) {
-
+        int edges[] = graph[start];
+        for (int i = 0; i < edges.length; i++) {
+            if (start == edges[i] || vst[start][edges[i]]) {
+                continue;
             }
+            vst[start][edges[i]] = true;
+            if (!visit[edges[i]]) {
+                visit[edges[i]] = true;
+                n++;
+            }
+            dfs(graph, vst, edges[i], len + 1, visit, n);
+
+            if (visit[edges[i]] && !vst[edges[i]][start]) {
+                visit[edges[i]] = false;
+                n--;
+            }
+            vst[start][edges[i]] = false;
         }
-
-        public boolean queryRange(int left, int right) {
-
-        }
-
-        public void removeRange(int left, int right) {
-
-        }*/
     }
 
+    public int shortestPathLength(int[][] graph) {
+        int n = graph.length;
+        if (n < 1) {
+            return n;
+        }
+        for (int i = 0; i < n; i++) {
+            boolean vst[][] = new boolean[n][n];
+            boolean visit[] = new boolean[n];
+            visit[i] = true;
+            dfs(graph, vst, i, 0, visit, 1);
+        }
+
+        if (min == Integer.MAX_VALUE) {
+            min = 0;
+        }
+        return min;
+    }
 
     public static void main(String args[]) {
         Solution s = new Solution();
-
-
+//        int graph[][] = new int[][]{{1,2,3},{0},{0},{0}};
+        int graph[][] = new int[][]{{1},{0,2,4},{1,3,4},{2},{1,2}};
+        System.out.println(s.shortestPathLength(graph));
     }
 }

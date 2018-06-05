@@ -5,12 +5,10 @@ import java.util.Scanner;
 
 /**
  * Copyright © 2018 Chris. All rights reserved.
- * <p>
- * Description:
- * <p>
- * Package: PACKAGE_NAME
- * author: Chris
- * date: 2018/6/5 9:22
+ *
+ * @author Chris
+ * 2018/6/5 18:25
+ * @see eight
  */
 public class Main {
 
