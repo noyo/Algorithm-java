@@ -21,7 +21,7 @@ public class Uva1609 {
     private static List<int[]> result = new ArrayList<>();
 
 
-    private static boolean dfs(int match[][], Integer team[], int n) {
+    private static boolean dfs(int match[][], int team[], int n) {
         if (2 == n) {
             result.add(new int[] {team[0], team[1]});
             return true;
@@ -38,38 +38,39 @@ public class Uva1609 {
             }
         }
 
-        boolean vst[] = new boolean[n + 1];
-        helper(match, gray, black, vst, 0, newTeam);
-        int left = gray.size();
-        for (int i = 0; i < gray.size(); i++) {
-            if (vst[gray.get(i)]) {
-                left--;
-            }
+        boolean vst[] = new boolean[1024 + 1];
+        List<Integer> bLeft = new ArrayList<>();
+        helper(match, gray, black, vst, newTeam, bLeft);
+        for (int i = 0; i < bLeft.size() - 1; i += 2) {
+            result.add(new int[] {bLeft.get(i), bLeft.get(i + 1)});
+            newTeam.add(match[bLeft.get(i)][bLeft.get(i + 1)] == 1 ? bLeft.get(i) : bLeft.get(i + 1));
         }
-        helper(match, gray, vst, 0, left, newTeam);
         for (int i = 0; i < gray.size(); i++) {
-            if (!vst[gray.get(i)]) {
+            if (!vst[gray.get(i)] && match[1][gray.get(i)] == 1) {
                 result.add(new int[] {1, gray.get(i)});
+                vst[gray.get(i)] = true;
                 break;
             }
         }
-        return dfs(match, (Integer[]) newTeam.toArray(), n / 2);
+        helper(match, gray, vst, newTeam);
+        int newT[] = new int[n / 2];
+        for (int i = 0; i < newTeam.size(); i++) {
+            newT[i] = newTeam.get(i);
+        }
+        return dfs(match, newT, n / 2);
     }
 
-    private static boolean helper(int[][] match, List<Integer> gray, boolean[] vst, int s, int left, List<Integer> newTeam) {
-        if (left == 1) {
-            return true;
-        }
-        for (int i = s; i < gray.size(); i++) {
+    private static void helper(int[][] match, List<Integer> gray, boolean[] vst, List<Integer> newTeam) {
+        for (int i = 0; i < gray.size(); i++) {
             if (vst[gray.get(i)]) {
                 continue;
             }
             vst[gray.get(i)] = true;
             for (int j = i + 1; j < gray.size(); j++) {
-                boolean flag = match[gray.get(i)][gray.get(j)] == 0;
-                if (vst[gray.get(j)] || flag && match[gray.get(j)][gray.get(i)] == 0) {
+                if (vst[gray.get(j)]) {
                     continue;
                 }
+                boolean flag = match[gray.get(i)][gray.get(j)] == 0;
                 result.add(new int[]{gray.get(i), gray.get(j)});
                 vst[gray.get(j)] = true;
                 if (flag) {
@@ -77,36 +78,25 @@ public class Uva1609 {
                 } else {
                     newTeam.add(gray.get(i));
                 }
-                if (helper(match, gray, vst, i + 1, left - 2, newTeam)) {
-                    return true;
-                }
-                newTeam.remove(newTeam.size() - 1);
-                result.remove(result.size() - 1);
-                vst[gray.get(j)] = false;
+                break;
             }
-            vst[gray.get(i)] = false;
         }
-        return false;
     }
 
-    private static boolean helper(int[][] match, List<Integer> gray, List<Integer> black, boolean[] vst, int s, List<Integer> newTeam) {
-        if (s == black.size()) {
-            return true;
-        }
-        for (int i = s; i < black.size(); i++) {
+    private static boolean helper(int[][] match, List<Integer> gray, List<Integer> black, boolean[] vst, List<Integer> newTeam, List<Integer> bLeft) {
+        for (int i = 0; i < black.size(); i++) {
             for (int j = 0; j < gray.size(); j++) {
-                if (vst[gray.get(j)] || match[black.get(i)][gray.get(j)] == 0) {
+                if (vst[gray.get(j)] || match[gray.get(j)][black.get(i)] == 0) {
                     continue;
                 }
                 vst[gray.get(j)] = true;
+                vst[black.get(i)] = true;
                 result.add(new int[]{gray.get(j), black.get(i)});
                 newTeam.add(gray.get(j));
-                if (helper(match, gray, black, vst, s + 1, newTeam)) {
-                    return true;
-                }
-                newTeam.remove(newTeam.size() - 1);
-                result.remove(result.size() - 1);
-                vst[gray.get(j)] = false;
+                break;
+            }
+            if (!vst[black.get(i)]) {
+                bLeft.add(black.get(i));
             }
         }
         return false;
@@ -121,7 +111,7 @@ public class Uva1609 {
         while (sc.hasNext()) {
             int n = sc.nextInt();
             int match[][] = new int[n + 1][n + 1];
-            Integer team[] = new Integer[n];
+            int team[] = new int[n];
             for (int i = 1; i <= n; i++) {
                 team[i - 1] = i;
                 char ch[] = sc.next().toCharArray();
@@ -132,8 +122,7 @@ public class Uva1609 {
 
             result.clear();
             dfs(match, team, n);
-            for (int i = result.size() - 1; i >= 0; i--) {
-                int a[] = result.get(i);
+            for (int a[] : result) {
                 System.out.println(a[0] + " " + a[1]);
             }
         }
