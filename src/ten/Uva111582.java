@@ -15,12 +15,12 @@ import java.util.Scanner;
  */
 public class Uva111582 {
 
-    private static int mod(BigInteger a, BigInteger b, int mod) {
-        if (b.doubleValue() <= 1) {
-            return a.pow(b.intValue()).intValue();
+    private static int mod(int a, long b, int mod) {
+        if (b <= 1) {
+            return (int) Math.pow(a, b);
         }
-        int c = b.mod(new BigInteger(String.valueOf(2))).intValue();
-        return (int) (a.pow(c).intValue() * Math.pow(mod(a, b.divide(new BigInteger(String.valueOf(2))), mod), 2) % mod);
+        int c = (int) (b % 2);
+        return (int) (Math.pow(a, c) * Math.pow(mod(a, b / 2, mod), 2) % mod);
     }
 
     public static void main(String args[]) throws FileNotFoundException {
@@ -30,7 +30,7 @@ public class Uva111582 {
 
         Scanner sc = new Scanner(System.in);
 
-        long time = System.currentTimeMillis();;
+        long time = System.currentTimeMillis();
         int f[][] = new int[1001][1001 * 6];
         int len[] = new int[1001];
         for (int i = 2; i <= 1000; i++) {
@@ -44,23 +44,32 @@ public class Uva111582 {
                 }
             }
         }
-        System.out.println(System.currentTimeMillis() - time);
-        System.out.println();
+//        System.out.println(System.currentTimeMillis() - time);
+//        System.out.println();
 
         int T = sc.nextInt();
         while (T-- > 0) {
-            BigInteger a = sc.nextBigInteger();
+            BigInteger bigA = sc.nextBigInteger();
             BigInteger b = sc.nextBigInteger();
             int n = sc.nextInt();
-            if (a.doubleValue() == 0 || n == 1) {
+
+            if (bigA.doubleValue() == 0 || n == 1) {
                 System.out.println(0);
                 continue;
             }
 
-            int mod = mod(a.mod(new BigInteger(String.valueOf(len[n]))), b, len[n]) % len[n];
-            System.out.println(f[n][mod]);
+            int mod = len[n];
+            int j = 0;
+            int a = bigA.mod(new BigInteger(String.valueOf(mod))).intValue();
+            if (b.doubleValue() <= 1) {
+                j = (int) (Math.pow(a, b.intValue()) % mod);
+            } else {
+                int c = b.mod(new BigInteger(String.valueOf(2))).intValue();
+                j = (int) (Math.pow(a, c) * Math.pow(mod(a, b.divide(new BigInteger(String.valueOf(2))).longValue(), mod), 2) % mod);
+            }
+            System.out.println(f[n][j]);
         }
-        System.out.println();
-        System.out.println(System.currentTimeMillis() - time);
+//        System.out.println();
+//        System.out.println(System.currentTimeMillis() - time);
     }
 }
