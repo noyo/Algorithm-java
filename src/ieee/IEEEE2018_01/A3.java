@@ -12,24 +12,24 @@ import java.util.Scanner;
 public class A3 {
     private final static int MOD = 10000007;
 
-    private static int[][] multiMatrix(int a[][], int b[][]) {
-        int c[][] = new int[2][2];
+    private static long[][] multiMatrix(long a[][], long b[][]) {
+        long c[][] = new long[2][2];
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
                 for (int k = 0; k < 2; k++) {
-                    c[i][j] = (c[i][j] + a[i][j + k] * b[j + k][i]) % MOD;
+                    c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % MOD;
                 }
             }
         }
         return c;
     }
 
-    private static int[][] powMatrix(int a[][], int k) {
+    private static long[][] powMatrix(long a[][], int k) {
         if (k == 1) {
             return a;
         }
         int r = k % 2;
-        int c[][] = powMatrix(a, k / 2);
+        long c[][] = powMatrix(a, k / 2);
         c = multiMatrix(c, c);
         if (r == 1) {
             c = multiMatrix(a, c);
@@ -61,7 +61,7 @@ public class A3 {
         }
         if (k > 0) {
             if (sec <= 0) {
-                sum = (sum + (first + sec) * (long) k) % MOD;
+                sum = (sum + (first + sec) * ((long)k % MOD)) % MOD;
             } else {
                 while (k > 0 && first < 0) {
                     int j = sec + first;
@@ -74,10 +74,10 @@ public class A3 {
                     sum = (sum + first + sec) % MOD;
                 } else if (k > 1) {
 
-                    int a[][] = new int[][] {{0, 1}, {1, 1}};
-                    int c1[][] = powMatrix(a, k + 1);
-                    int c2[][] = multiMatrix(a, c1);
-                    sum = (sum + first * (c1[1][1] - 1) + sec * (c2[1][1] - 1)) % MOD;
+                    long a[][] = new long[][] {{0, 1}, {1, 1}};
+                    long c1[][] = powMatrix(a, k + 1);
+                    long c2[][] = multiMatrix(a, c1);
+                    sum = (sum + first * (c1[1][1] - 1) + sec * (c2[1][1] - 2)) % MOD;
                 }
             }
         }
