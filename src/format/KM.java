@@ -1,3 +1,5 @@
+package format;
+
 import java.util.Scanner;
 
 /**
