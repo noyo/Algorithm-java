@@ -7,7 +7,7 @@ import java.util.Scanner;
  *
  * @author Chris
  * 2018/5/31 21:07
- * @see PACKAGE_NAME
+ * @see
  */
 public class KM {
     private static final int MAX_VAL = 1 << 9;
